@@ -5,7 +5,7 @@ use yii\bootstrap\ActiveForm;
 
 if(Yii::$app->session->hasFlash('sukses'))
 {
-    echo "<div class='alert alert-success'>".Yii::$app->session->getFlash('sukses')."</div>";
+    echo "<div class='alert alert-success'>".Yii::$app->session->getFlash('success')."</div>";
 }
 
 $form = ActiveForm::begin();
