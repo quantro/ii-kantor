@@ -33,7 +33,12 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        //return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        $user = tblUser::findOne($id);
+        if (count($user)) {
+            return new static($user);
+        }
+        return null;
     }
 
     /**
@@ -41,11 +46,13 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
+        //foreach (self::$users as $user) {
+        $user = tblUser::find()->where(['accessToken'=>$token])->one();
+            //if ($user['accessToken'] === $token) {
+            if(count($user)){
                 return new static($user);
             }
-        }
+        //}
 
         return null;
     }
@@ -58,11 +65,13 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
+        //foreach (self::$users as $user) {
+        $user = tblUser::find()->where(['username'=>$username])->one();
+            //if (strcasecmp($user['username'], $username) === 0) {
+            if(count($user)){ 
                 return new static($user);
             }
-        }
+        //}
 
         return null;
     }
